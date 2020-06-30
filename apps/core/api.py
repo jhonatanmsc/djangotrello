@@ -1,11 +1,13 @@
 # ViewSets define the view behavior.
-from django.contrib.auth.models import User
+from django.contrib.admin.models import LogEntry
+from django.contrib.auth.models import User, Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.core.serializers import UserSerializer
+from apps.core.serializers import UserSerializer, GroupSerializer, PermissionSerializer, LogEntrySerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -59,3 +61,19 @@ class UserViewSet(viewsets.ModelViewSet):
         user.save()
 
         return Response(status=204)
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
+class LogEntryViewSet(viewsets.ModelViewSet):
+    queryset = LogEntry.objects.all()
+    serializer_class = LogEntrySerializer
+    allowed_methods = ['GET']
+
+
+class PermissionViewSet(viewsets.ModelViewSet):
+    queryset = Permission.objects.all()
+    serializer_class = PermissionSerializer
