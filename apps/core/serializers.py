@@ -9,10 +9,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = [
-            'url', 'username', 'email', 'is_staff', 'is_superuser', 'last_login', 'date_joined',
-            'first_name', 'last_name', 'password',
-        ]
+        fields = '__all__'
         read_only_fields = ['date_joined', 'last_login']
 
 
