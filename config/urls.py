@@ -18,6 +18,7 @@ from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 from apps.core.urls import core_router
+from config import settings
 
 router = core_router
 
@@ -28,3 +29,9 @@ urlpatterns = [
     path('login/', obtain_jwt_token),
     path('refresh-token/', refresh_jwt_token),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
